@@ -1,0 +1,110 @@
+<script type="text/javascript">
+  RED.nodes.registerType('phidget22-digitalinput', {
+    category: 'Phidgets',
+    color: '#a6bbcf',
+    defaults: {
+      name: { required: false },
+      channel: { value: 0 },
+      deviceSerialNumber: { value: -1 },
+      isHubPortDevice: { value: false },
+      hubPort: { value: 0 },
+      debug: { value: false },
+      inputMode: { value: 1 },
+      powerSupply: { value: 1 },
+      openTimeout: { value: '5000' },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'phidgetlogo.png',
+    label: function () {
+      return this.name || `DigitalInput(${this.channel})`;
+    },
+    paletteLabel: 'DigitalInput',
+    oneditprepare: function () {
+      const prevInput = this.inputMode;
+      const prevSupply = this.powerSupply;
+
+      $.getScript('phidget22/js/phidget22.min.js').done(function (data, textStatus, jqxhr) {
+        for (const key in phidget22.PowerSupply) {
+          $('#node-input-powerSupply').append(new Option(key, phidget22.PowerSupply[key]));
+        }
+        $('#node-input-powerSupply').val(prevSupply);
+
+        for (const key in phidget22.InputMode) {
+          $('#node-input-inputMode').append(new Option(key, phidget22.InputMode[key]));
+        }
+        $('#node-input-inputMode').val(prevInput);
+      });
+    },
+  });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-digitalinput">
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Display Name</label>
+    <input type="text" id="node-input-name" placeholder="Custom Display Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-powerSupply"><i class="icon-tag"></i>Power Supply</label>
+    <select id="node-input-powerSupply"></select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-inputMode"><i class="icon-tag"></i>Input Mode</label>
+    <select id="node-input-inputMode"></select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+    <input type="text" id="node-input-channel">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+    <input type="text" id="node-input-deviceSerialNumber">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-isHubPortDevice" style="width:270px"><i class="icon-tag"></i>Using a VINT Port in DigitalInput mode?</label>
+    <input type="checkbox" style="width:auto" id="node-input-isHubPortDevice">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+    <input type="text" id="node-input-hubPort">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-openTimeout"><i class="icon-tag"></i> Open Timeout (ms)</label>
+    <input type="text" id="node-input-openTimeout">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+    <input type="checkbox" style="width:auto" id="node-input-debug">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-digitalinput">
+  <p>
+    Opens a Phidget digital input object, which will send messages when the input state changes.
+  </p>
+
+  <p>
+    The node outputs events with topic as the Phidget API event, for example, msg.topic="Acceleration"
+    and msg.payload={"acceleration": 100}. Methods can be invoked with the method name as topic and
+    method argument set as msg.payload.methodArgName=methodArgData. For example,
+    msg.topic="setDataInterval" and msg.payload={"dataInterval":1000} to set the data interval.
+  </p>
+
+  <p>
+    Phidgets API reference available here: https://www.phidgets.com/?view=api&lang=JavaScript
+  </p>
+
+  <p>Supported methods:</p>
+  <ul>
+    <li>setInputMode</li>
+    <li>setPowerSupply</li>
+  </ul>
+</script>

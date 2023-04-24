@@ -1,0 +1,122 @@
+<script type="text/javascript">
+  RED.nodes.registerType('phidget22-lcd', {
+    category: 'Phidgets',
+    color: '#a6bbcf',
+    defaults: {
+      name: { required: false },
+      channel: { value: 0 },
+      deviceSerialNumber: { value: -1 },
+      hubPort: { value: 0 },
+      debug: { value: false },
+      screenSize: { value: 1 },
+      openTimeout: { value: '5000' },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'phidgetlogo.png',
+    label: function () {
+      return this.name || `LCD(${this.channel})`;
+    },
+    paletteLabel: 'LCD',
+    oneditprepare: function () {
+      const prevSize = this.screenSize;
+      $.getScript('phidget22/js/phidget22.min.js').done(function (data, textStatus, jqxhr) {
+        for (const key in phidget22.LCDScreenSize) {
+          $('#node-input-screenSize').append(new Option(key, phidget22.LCDScreenSize[key]));
+        }
+        $('#node-input-screenSize').val(prevSize);
+      });
+    },
+  });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-lcd">
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Display Name</label>
+    <input type="text" id="node-input-name" placeholder="Custom Display Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-screenSize"><i class="icon-tag"></i>Screen Size</label>
+    <select id="node-input-screenSize"></select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+    <input type="text" id="node-input-channel">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+    <input type="text" id="node-input-deviceSerialNumber">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+    <input type="text" id="node-input-hubPort">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-openTimeout"><i class="icon-tag"></i> Open Timeout (ms)</label>
+    <input type="text" id="node-input-openTimeout">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+    <input type="checkbox" style="width:auto" id="node-input-debug">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-lcd">
+  <p>
+    Opens a Phidget LCD object, which will receive messages to write text or graphics on the LCD screen.
+  </p>
+
+  <p>
+    The node outputs events with topic as the Phidget API event, for example, msg.topic="Acceleration"
+    and msg.payload={"acceleration": 100}. Methods can be invoked with the method name as topic and
+    method argument set as msg.payload.methodArgName=methodArgData. For example,
+    msg.topic="setDataInterval" and msg.payload={"dataInterval":1000} to set the data interval.
+  </p>
+
+  <p>
+    Phidgets API reference available here: https://www.phidgets.com/?view=api&lang=JavaScript
+  </p>
+
+  <p>Supported methods:</p>
+  <ul>
+    <li>getBacklight</li>
+    <li>setBacklight</li>
+    <li>getMinBacklight</li>
+    <li>getMaxBacklight</li>
+    <li>setCharacterBitmap</li>
+    <li>getMaxCharacters</li>
+    <li>clear</li>
+    <li>getContrast</li>
+    <li>setContrast</li>
+    <li>getMinContrast</li>
+    <li>getMaxContrast</li>
+    <li>copy</li>
+    <li>getCursorBlink</li>
+    <li>getCursorOn</li>
+    <li>setCursorOn</li>
+    <li>drawLine</li>
+    <li>drawPixel</li>
+    <li>drawRect</li>
+    <li>flush</li>
+    <li>getFontSize</li>
+    <li>setFontSize</li>
+    <li>getFrameBuffer</li>
+    <li>setFrameBuffer</li>
+    <li>getHeight</li>
+    <li>initialize</li>
+    <li>saveFrameBuffer</li>
+    <li>getScreenSize</li>
+    <li>setScreenSize</li>
+    <li>getSleeping</li>
+    <li>setSleeping</li>
+    <li>getWidth</li>
+    <li>writeBitmap</li>
+    <li>writeText</li>
+  </ul>
+</script>

@@ -1,0 +1,146 @@
+<script type="text/javascript">
+  RED.nodes.registerType('phidget22-rcservo', {
+    category: 'Phidgets',
+    color: '#a6bbcf',
+    defaults: {
+      name: { required: false },
+      channel: { value: 0 },
+      deviceSerialNumber: { value: -1 },
+      hubPort: { value: 0 },
+      debug: { value: false },
+      voltage: { value: 1 },
+      minPosition: { value: 0 },
+      maxPosition: { value: 180 },
+      minPulseWidth: { value: 550 },
+      maxPulseWidth: { value: 2450 },
+      acceleration: { value: 360 },
+      dataInterval: { value: 256 },
+      speedRampingState: { value: true },
+      velocityLimit: { value: 180 },
+      openTimeout: { value: '5000' },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'phidgetlogo.png',
+    label: function () {
+      return this.name || `RCServo(${this.channel})`;
+    },
+    paletteLabel: 'RCServo',
+    oneditprepare: function () {
+      const prevVoltage = this.voltage;
+      $.getScript('phidget22/js/phidget22.min.js').done(function (data, textStatus, jqxhr) {
+        for (const key in phidget22.RCServoVoltage) {
+          $('#node-input-voltage').append(new Option(key, phidget22.RCServoVoltage[key]));
+        }
+        $('#node-input-voltage').val(prevVoltage);
+      });
+    },
+  });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-rcservo">
+  <div class="form-row">
+    <label for="node-input-name"><i class="icon-tag"></i> Display Name</label>
+    <input type="text" id="node-input-name" placeholder="Custom Display Name">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-voltage"><i class="icon-tag"></i>Servo Voltage</label>
+    <select id="node-input-voltage"></select>
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-dataInterval"><i class="icon-tag"></i> Data Interval (ms)</label>
+    <input type="text" id="node-input-dataInterval">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-velocityLimit"><i class="icon-tag"></i> Velocity Limit</label>
+    <input type="text" id="node-input-velocityLimit">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-minPosition"><i class="icon-tag"></i> Min. Position</label>
+    <input type="text" id="node-input-minPosition">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-maxPosition"><i class="icon-tag"></i> Max. Position</label>
+    <input type="text" id="node-input-maxPosition">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-minPulseWidth"><i class="icon-tag"></i> Min. Pulse Width</label>
+    <input type="text" id="node-input-minPulseWidth">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-maxPulseWidth"><i class="icon-tag"></i> Max. Pulse Width</label>
+    <input type="text" id="node-input-maxPulseWidth">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-speedRampingState" style="width:270px"><i class="icon-tag"></i>Speed Ramping</label>
+    <input type="checkbox" style="width:auto" id="node-input-speedRampingState">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+    <input type="text" id="node-input-channel">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+    <input type="text" id="node-input-deviceSerialNumber">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+    <input type="text" id="node-input-hubPort">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-openTimeout"><i class="icon-tag"></i> Open Timeout (ms)</label>
+    <input type="text" id="node-input-openTimeout">
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+    <input type="checkbox" style="width:auto" id="node-input-debug">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-rcservo">
+  <p>
+    Opens a Phidget RCServo object, which will receive messages to control the attached servo motor.
+  </p>
+
+  <p>
+    The node outputs events with topic as the Phidget API event, for example, msg.topic="Acceleration"
+    and msg.payload={"acceleration": 100}. Methods can be invoked with the method name as topic and
+    method argument set as msg.payload.methodArgName=methodArgData. For example,
+    msg.topic="setDataInterval" and msg.payload={"dataInterval":1000} to set the data interval.
+  </p>
+
+  <p>
+    Phidgets API reference available here: https://www.phidgets.com/?view=api&lang=JavaScript
+  </p>
+
+  <p>Supported methods:</p>
+  <ul>
+    <li>setAcceleration</li>
+    <li>setDataInterval</li>
+    <li>setEngaged</li>
+    <li>enableFailsafe</li>
+    <li>setMinPosition</li>
+    <li>setMaxPosition</li>
+    <li>setMinPulseWidth</li>
+    <li>setMaxPulseWidth</li>
+    <li>resetFailsafe</li>
+    <li>setSpeedRampingState</li>
+    <li>setTargetPosition</li>
+    <li>setTorque</li>
+    <li>setVelocityLimit</li>
+    <li>setVoltage</li>
+  </ul>
+</script>

@@ -1,0 +1,108 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-voltageinput',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            channel: {value: 0 },
+            deviceSerialNumber: {value: -1},
+            isHubPortDevice: {value: false},
+            hubPort: {value: 0},
+            debug: {value: false},
+            dataInterval: {required: true},
+            voltageChangeTrigger:{value: 0},
+            sensorType:{value: 0},
+            powerSupply: {value:1},
+            voltageRange: {value:1}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            return "VoltageInput(" + this.channel + ")";
+        },
+        paletteLabel: "VoltageInput",
+        oneditprepare: function() {
+            var prevtype = this.sensorType;
+            var prevsupply = this.powerSupply;
+            var prevrange = this.voltageRange;
+
+            $.getScript('phidget22/js/phidget22.min.js').done(function(data,textStatus,jqxhr){
+
+                for (var key in phidget22.VoltageSensorType) {
+                    $('#node-input-sensorType').append(new Option(key,phidget22.VoltageSensorType[key]));
+                } 
+                $('#node-input-sensorType').val(prevtype);   
+                
+                for (var key in phidget22.VoltageRange) {
+                    $('#node-input-voltageRange').append(new Option(key,phidget22.VoltageRange[key]));
+                } 
+                $('#node-input-voltageRange').val(prevrange);  
+
+                for (var key in phidget22.PowerSupply) {
+                    $('#node-input-powerSupply').append(new Option(key,phidget22.PowerSupply[key]));
+                } 
+                $('#node-input-powerSupply').val(prevsupply);  
+            })
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-voltageinput">
+
+    <div class="form-row">
+        <label for="node-input-sensorType"><i class="icon-tag"></i>Sensor Type</label>
+        <select id="node-input-sensorType">
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-voltageRange"><i class="icon-tag"></i>Voltage Range</label>
+        <select id="node-input-voltageRange">
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-powerSupply"><i class="icon-tag"></i>Power Supply</label>
+        <select id="node-input-powerSupply">
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <input type="text" id="node-input-channel">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+        <input type="text" id="node-input-deviceSerialNumber">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-isHubPortDevice" style="width:270px"><i class="icon-tag"></i>Using a VINT Port in VoltageInput mode?</label>
+        <input type="checkbox" style="width:auto" id="node-input-isHubPortDevice">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+        <input type="text" id="node-input-hubPort">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-dataInterval"><i class="icon-tag"></i> Data Interval</label>
+        <input type="text" id="node-input-dataInterval">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-voltageChangeTrigger"><i class="icon-tag"></i> Change Trigger</label>
+        <input type="text" id="node-input-voltageChangeTrigger">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-voltageinput">
+    <p>Opens a Phidget voltage input object, which will send messages when the voltage changes.</p>
+</script>

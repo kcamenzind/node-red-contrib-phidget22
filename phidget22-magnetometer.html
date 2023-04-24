@@ -1,0 +1,130 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-magnetometer',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            channel: {value: 0 },
+            deviceSerialNumber: {value: -1},
+            hubPort: {value: 0},
+            debug: {value: false},
+            dataInterval: {required: true},
+            magneticFieldChangeTrigger: {value: 0},
+            magneticField: {value:""},
+            offset0: {value:""},
+            offset1: {value:""},
+            offset2: {value:""},
+            gain0: {value:""},
+            gain1: {value:""},
+            gain2: {value:""},
+            T0: {value:""},
+            T1: {value:""},
+            T2: {value:""},
+            T3: {value:""},
+            T4: {value:""},
+            T5: {value:""},
+            setParams: {value: false}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            return "Magnetometer(" + this.channel + ")";
+        },
+        paletteLabel: "Magnetometer",
+        oneditprepare: function() {
+            var parambox = $("#node-input-setParams");
+
+            parambox.click(function() {
+                $("#params-row").toggle(this.checked);
+            });
+            
+            if(parambox.prop('checked'))
+                $("#params-row").show();
+            else
+                $("#params-row").hide();
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-magnetometer">
+
+    <div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <input type="text" id="node-input-channel">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+        <input type="text" id="node-input-deviceSerialNumber">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+        <input type="text" id="node-input-hubPort">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-dataInterval"><i class="icon-tag"></i> Data Interval</label>
+        <input type="text" id="node-input-dataInterval">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-magneticFieldChangeTrigger"><i class="icon-tag"></i> Change Trigger</label>
+        <input type="text" id="node-input-magneticFieldChangeTrigger">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-setParams" style="width:270px"><i class="icon-tag"></i>Set Correction Parameters?</label>
+        <input type="checkbox" style="width:auto" id="node-input-setParams">
+    </div>
+
+    <div class="form-row" id="params-row">
+        <label for="node-input-magneticField"><i class="icon-tag"></i> Magnetic Field</label>
+        <input type="text" style="width:180px" id="node-input-magneticField">
+        <br/>
+        <label for="node-input-offset0"><i class="icon-tag"></i> Offset 0</label>
+        <input type="text" style="width:180px" id="node-input-offset0">
+        <br/>
+        <label for="node-input-offset1"><i class="icon-tag"></i> Offset 1</label>
+        <input type="text" style="width:180px" id="node-input-offset1">
+        <br/>
+        <label for="node-input-offset2"><i class="icon-tag"></i> Offset 2</label>
+        <input type="text" style="width:180px" id="node-input-offset2">
+        <br/>
+        <label for="node-input-gain0"><i class="icon-tag"></i> Gain 0</label>
+        <input type="text" style="width:180px" id="node-input-gain0">
+        <br/>
+        <label for="node-input-gain1"><i class="icon-tag"></i> Gain 1</label>
+        <input type="text" style="width:180px" id="node-input-gain1">
+        <br/>
+        <label for="node-input-gain2"><i class="icon-tag"></i> Gain 2</label>
+        <input type="text" style="width:180px" id="node-input-gain2">
+        <br/>
+        <label for="node-input-T0"><i class="icon-tag"></i> T0</label>
+        <input type="text" style="width:180px" id="node-input-T0">
+        <br/>
+        <label for="node-input-T1"><i class="icon-tag"></i> T1</label>
+        <input type="text" style="width:180px" id="node-input-T1">
+        <br/>
+        <label for="node-input-T2"><i class="icon-tag"></i> T2</label>
+        <input type="text" style="width:180px" id="node-input-T2">
+        <br/>
+        <label for="node-input-T3"><i class="icon-tag"></i> T3</label>
+        <input type="text" style="width:180px"v id="node-input-T3">
+        <br/>
+        <label for="node-input-T4"><i class="icon-tag"></i> T4</label>
+        <input type="text" style="width:180px" id="node-input-T4">
+        <br/>
+        <label for="node-input-T5"><i class="icon-tag"></i> T5</label>
+        <input type="text" style="width:180px" id="node-input-T5">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-magnetometer">
+    <p>Opens a Phidget magnetometer object, which will send messages when the magnetic field strength changes.</p>
+</script>

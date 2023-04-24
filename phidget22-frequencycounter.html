@@ -1,0 +1,102 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-frequencycounter',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            channel: {value: 0 },
+            deviceSerialNumber: {value: -1},
+            hubPort: {value: 0},
+            debug: {value: false},
+            dataInterval: {required: true},
+            powerSupply:{value: 1},
+            inputMode:{value: 1},
+            filterType:{value: 1},
+            frequencyCutoff:{value: 1}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            return "FrequencyCounter(" + this.channel + ")";
+        },
+        paletteLabel: "FrequencyCounter",
+        oneditprepare: function() {
+            var prevFilter = this.filterType;
+            var prevMode = this.inputMode;
+            var prevSupply = this.powerSupply;
+
+            $.getScript('phidget22/js/phidget22.min.js').done(function(data,textStatus,jqxhr){
+
+                for (var key in phidget22.PowerSupply) {
+                    $('#node-input-powerSupply').append(new Option(key,phidget22.PowerSupply[key]));
+                } 
+                $('#node-input-powerSupply').val(prevSupply);      
+
+                for (var key in phidget22.InputMode) {
+                    $('#node-input-inputMode').append(new Option(key,phidget22.InputMode[key]));
+                } 
+                $('#node-input-inputMode').val(prevMode); 
+
+                for (var key in phidget22.FrequencyFilterType) {
+                    $('#node-input-filterType').append(new Option(key,phidget22.FrequencyFilterType[key]));
+                } 
+                $('#node-input-filterType').val(prevFilter);           
+            })
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-frequencycounter">
+
+    <div class="form-row">
+        <label for="node-input-inputMode"><i class="icon-tag"></i>Input Mode</label>
+        <select id="node-input-inputMode">
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-powerSupply"><i class="icon-tag"></i>Power Supply</label>
+        <select id="node-input-powerSupply">
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-filterType"><i class="icon-tag"></i>Filter Type</label>
+        <select id="node-input-filterType">
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-frequencyCutoff"><i class="icon-tag"></i> Frequency Cutoff</label>
+        <input type="text" id="node-input-frequencyCutoff">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <input type="text" id="node-input-channel">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+        <input type="text" id="node-input-deviceSerialNumber">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+        <input type="text" id="node-input-hubPort">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-dataInterval"><i class="icon-tag"></i> Data Interval</label>
+        <input type="text" id="node-input-dataInterval">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-frequencycounter">
+    <p>Opens a Phidget frequency counter object, which will send messages when the frequency value changes.</p>
+</script>

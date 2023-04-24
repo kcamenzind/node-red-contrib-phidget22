@@ -1,0 +1,65 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-phsensor',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            channel: {value: 0 },
+            deviceSerialNumber: {value: -1},
+            debug: {value: false},
+            dataInterval: {required: true},
+            hubPort: {value: 0},
+            PHChangeTrigger:{value: 0},
+            correctionTemperature:{value: 25}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            return "PHSensor(" + this.channel + ")";
+        },
+        paletteLabel: "PHSensor"
+        
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-phsensor">
+
+    <div class="form-row">
+        <label for="node-input-correctionTemperature"><i class="icon-tag"></i> Correction Temperature</label>
+        <input type="text" id="node-input-correctionTemperature">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <input type="text" id="node-input-channel">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+        <input type="text" id="node-input-deviceSerialNumber">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-dataInterval"><i class="icon-tag"></i> Data Interval</label>
+        <input type="text" id="node-input-dataInterval">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-PHChangeTrigger"><i class="icon-tag"></i> Change Trigger</label>
+        <input type="text" id="node-input-PHChangeTrigger">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+        <input type="text" id="node-input-hubPort">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-phsensor">
+    <p>Opens a Phidget pH sensor object, which will send messages when the sensor value changes.</p>
+</script>

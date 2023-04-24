@@ -1,0 +1,122 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-motorpositioncontroller',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            channel: {value: 0 },
+            deviceSerialNumber: {value: -1},
+            hubPort: {value: 0},
+            debug: {value: false},
+            dataInterval: {required: true},
+            fanMode:{value: 1},
+            IOMode:{value: 1},
+            kp: {value: 20000},
+            ki: {value: 2},
+            kd: {value: 40000},
+            velocityLimit: {value: 1000},
+            stallVelocity: {value: 1000},
+            acceleration: {value: 100},
+            deadBand: {value: 0}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            return "MotorPositionController(" + this.channel + ")";
+        },
+        paletteLabel: "MotorPositionController",
+        oneditprepare: function() {
+            var prevfan = this.fanMode;
+            var previo = this.IOMode;
+
+            $.getScript('phidget22/js/phidget22.min.js').done(function(data,textStatus,jqxhr){
+
+                for (var key in phidget22.EncoderIOMode) {
+                    $('#node-input-IOMode').append(new Option(key,phidget22.EncoderIOMode[key]));
+                } 
+                $('#node-input-IOMode').val(previo);  
+                
+                for (var key in phidget22.FanMode) {
+                    $('#node-input-fanMode').append(new Option(key,phidget22.FanMode[key]));
+                } 
+                $('#node-input-fanMode').val(prevfan);  
+            })
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-motorpositioncontroller">
+
+    <div class="form-row">
+        <label for="node-input-fanMode"><i class="icon-tag"></i>Fan Mode</label>
+        <select id="node-input-fanMode">
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-IOMode"><i class="icon-tag"></i>Encoder IO Mode</label>
+        <select id="node-input-IOMode">
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-dataInterval"><i class="icon-tag"></i> Data Interval</label>
+        <input type="text" id="node-input-dataInterval">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-kp"><i class="icon-tag"></i>Kp</label>
+        <input type="text" style="width:180px" id="node-input-kp">
+        <br/>
+        <label for="node-input-ki"><i class="icon-tag"></i>Ki</label>
+        <input type="text" style="width:180px" id="node-input-ki">
+        <br/>
+        <label for="node-input-kd"><i class="icon-tag"></i>Kd</label>
+        <input type="text" style="width:180px" id="node-input-kd">
+
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-velocityLimit"><i class="icon-tag"></i> Velocity Limit</label>
+        <input type="text" id="node-input-velocityLimit">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-stallVelocity"><i class="icon-tag"></i> Stall Velocity</label>
+        <input type="text" id="node-input-stallVelocity">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-acceleration"><i class="icon-tag"></i> Acceleration</label>
+        <input type="text" id="node-input-acceleration">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deadBand"><i class="icon-tag"></i> Deadband</label>
+        <input type="text" id="node-input-deadBand">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <input type="text" id="node-input-channel">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+        <input type="text" id="node-input-deviceSerialNumber">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+        <input type="text" id="node-input-hubPort">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-motorpositioncontroller">
+    <p>Opens a Phidget MotorPositionController object, which will receive messages to configure a control system for the attached BLDC or DC motor.</p>
+</script>

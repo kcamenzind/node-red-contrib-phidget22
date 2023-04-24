@@ -1,0 +1,76 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-digitaloutput',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            channel: {value: 0 },
+            deviceSerialNumber: {value: -1},
+            isHubPortDevice: {value: false},
+            hubPort: {value: 0},
+            debug: {value: false},
+            LEDCurrentLimit: {value: 0.02},
+            LEDForwardVoltage: {value:1}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            return "DigitalOutput(" + this.channel + ")";
+        },
+        paletteLabel: "DigitalOutput",
+        oneditprepare: function() {
+            var prevVoltage = this.LEDForwardVoltage;
+
+            $.getScript('phidget22/js/phidget22.min.js').done(function(data,textStatus,jqxhr){
+
+                for (var key in phidget22.LEDForwardVoltage) {
+                    $('#node-input-LEDForwardVoltage').append(new Option(key,phidget22.LEDForwardVoltage[key]));
+                } 
+                $('#node-input-LEDForwardVoltage').val(prevVoltage); 
+            })
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-digitaloutput">
+
+    <div class="form-row">
+        <label for="node-input-LEDForwardVoltage"><i class="icon-tag"></i>LED Forward Voltage</label>
+        <select id="node-input-LEDForwardVoltage">
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-LEDCurrentLimit"><i class="icon-tag"></i> LED Current Limit</label>
+        <input type="text" id="node-input-LEDCurrentLimit">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <input type="text" id="node-input-channel">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+        <input type="text" id="node-input-deviceSerialNumber">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-isHubPortDevice" style="width:270px"><i class="icon-tag"></i>Using a VINT Port in DigitalOutput mode?</label>
+        <input type="checkbox" style="width:auto" id="node-input-isHubPortDevice">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+        <input type="text" id="node-input-hubPort">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-digitaloutput">
+    <p>Opens a Phidget digital output object, allowing you to set the duty cycle.</p>
+</script>

@@ -1,0 +1,45 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-dictionary',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            deviceSerialNumber: {value: -1},
+            label: {value: ""},
+            debug: {value: false}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            if(this.label !== "")
+                return "Dictionary(" + this.label + ")";
+            if(this.deviceSerialNumber !== "-1")
+                return "Dictionary(" + this.deviceSerialNumber + ")";
+            else
+                return "Dictionary";
+        },
+        paletteLabel: "Dictionary"
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-dictionary">
+
+    <div class="form-row">
+        <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+        <input type="text" id="node-input-deviceSerialNumber">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-label"><i class="icon-tag"></i> Dictionary Label</label>
+        <input type="text" id="node-input-label">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-dictionary">
+    <p>Opens a Phidget dictionary object, a purely digital key-value data structure useful for passing information between multiple programs.</p>
+</script>

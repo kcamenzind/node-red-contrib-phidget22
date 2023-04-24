@@ -1,0 +1,74 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-spatial',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            channel: {value: 0 },
+            deviceSerialNumber: {value: -1},
+            hubPort: {value: 0},
+            debug: {value: false},
+            dataInterval: {required: true},
+            algorithm: {value: 0},
+            algorithmMagnetometerGain: {value:0}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            return "Spatial(" + this.channel + ")";
+        },
+        paletteLabel: "Spatial",
+        oneditprepare: function() {
+            var prevtype = this.algorithm;
+
+            $.getScript('phidget22/js/phidget22.min.js').done(function(data,textStatus,jqxhr){
+
+                for (var key in phidget22.SpatialAlgorithm) {
+                    $('#node-input-algorithm').append(new Option(key,phidget22.SpatialAlgorithm[key]));
+                } 
+                $('#node-input-algorithm').val(prevtype);               
+            })
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-spatial">
+
+    <div class="form-row">
+        <label for="node-input-algorithm"><i class="icon-tag"></i>Spatial Algorithm</label>
+        <select id="node-input-algorithm">
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-algorithmMagnetometerGain"><i class="icon-tag"></i> Algorithm Magnetometer Gain</label>
+        <input type="text" id="node-input-algorithmMagnetometerGain">
+    </div>
+    <div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <input type="text" id="node-input-channel">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+        <input type="text" id="node-input-deviceSerialNumber">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+        <input type="text" id="node-input-hubPort">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-dataInterval"><i class="icon-tag"></i> Data Interval</label>
+        <input type="text" id="node-input-dataInterval">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-spatial">
+    <p>Opens a Phidget spatial object, which will send messages containing spatial data.</p>
+</script>

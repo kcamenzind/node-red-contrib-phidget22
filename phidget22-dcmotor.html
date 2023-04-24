@@ -1,0 +1,100 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-dcmotor',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            channel: {value: 0 },
+            deviceSerialNumber: {value: -1},
+            hubPort: {value: 0},
+            debug: {value: false},
+            dataInterval: {required: true},
+            backEMFSensingState:{value: 0},
+            fanMode:{value: 1},
+            targetBrakingStrength: {value: 0},
+            currentLimit: {value: 2},
+            acceleration: {value: 100},
+            currentRegulatorGain: {value: 10}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            return "DCMotor(" + this.channel + ")";
+        },
+        paletteLabel: "DCMotor",
+        oneditprepare: function() {
+            var prevfan = this.fanMode;
+
+            $.getScript('phidget22/js/phidget22.min.js').done(function(data,textStatus,jqxhr){
+
+                for (var key in phidget22.FanMode) {
+                    $('#node-input-fanMode').append(new Option(key,phidget22.FanMode[key]));
+                } 
+                $('#node-input-fanMode').val(prevfan);  
+            })
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-dcmotor">
+
+    <div class="form-row">
+        <label for="node-input-fanMode"><i class="icon-tag"></i>Fan Mode</label>
+        <select id="node-input-fanMode">
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-dataInterval"><i class="icon-tag"></i> Data Interval</label>
+        <input type="text" id="node-input-dataInterval">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-currentLimit"><i class="icon-tag"></i> Current Limit</label>
+        <input type="text" id="node-input-currentLimit">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-currentRegulatorGain"><i class="icon-tag"></i> Current Regulator Gain</label>
+        <input type="text" id="node-input-currentRegulatorGain">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-targetBrakingStrength"><i class="icon-tag"></i> Target Braking Strength</label>
+        <input type="text" id="node-input-targetBrakingStrength">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-acceleration"><i class="icon-tag"></i> Acceleration</label>
+        <input type="text" id="node-input-acceleration">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-backEMFSensingState"><i class="icon-tag"></i> Back EMF Sensing</label>
+        <input type="checkbox" style="width:auto" id="node-input-backEMFSensingState">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <input type="text" id="node-input-channel">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+        <input type="text" id="node-input-deviceSerialNumber">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+        <input type="text" id="node-input-hubPort">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-dcmotor">
+    <p>Opens a Phidget DCMotor object, which will receive messages to control a DC motor.</p>
+</script>

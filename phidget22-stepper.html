@@ -1,0 +1,94 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-stepper',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            channel: {value: 0 },
+            deviceSerialNumber: {value: -1},
+            hubPort: {value: 0},
+            debug: {value: false},
+            dataInterval: {required: true},
+            controlMode:{value: 0},
+            currentLimit: {value: 1},
+            velocitylimit: {value: 10000},
+            holdingCurrentLimit: {value: 1},
+            acceleration: {value: 10000}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            return "Stepper(" + this.channel + ")";
+        },
+        paletteLabel: "Stepper",
+        oneditprepare: function() {
+            var prevmode = this.controlMode;
+
+            $.getScript('phidget22/js/phidget22.min.js').done(function(data,textStatus,jqxhr){
+
+                for (var key in phidget22.StepperControlMode) {
+                    $('#node-input-controlMode').append(new Option(key,phidget22.StepperControlMode[key]));
+                } 
+                $('#node-input-controlMode').val(prevmode);  
+            })
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-stepper">
+
+    <div class="form-row">
+        <label for="node-input-controlMode"><i class="icon-tag"></i>Control Mode</label>
+        <select id="node-input-controlMode">
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-dataInterval"><i class="icon-tag"></i> Data Interval</label>
+        <input type="text" id="node-input-dataInterval">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-velocitylimit"><i class="icon-tag"></i> Velocity Limit</label>
+        <input type="text" id="node-input-velocitylimit">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-currentLimit"><i class="icon-tag"></i>Current Limit</label>
+        <input type="text" id="node-input-currentLimit">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-holdingCurrentLimit"><i class="icon-tag"></i>Holding Current Limit</label>
+        <input type="text" id="node-input-holdingCurrentLimit">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-acceleration"><i class="icon-tag"></i> Acceleration</label>
+        <input type="text" id="node-input-acceleration">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <input type="text" id="node-input-channel">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+        <input type="text" id="node-input-deviceSerialNumber">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+        <input type="text" id="node-input-hubPort">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-stepper">
+    <p>Opens a Phidget Stepper object, which will receive messages to control the attached stepper motor.</p>
+</script>

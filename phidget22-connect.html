@@ -1,0 +1,40 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-connect',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            port: {value:"5661", required:"true"},
+            hostname: {value:"localhost",required:"true"},
+            debug: {value: false}
+        },
+        inputs:0,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            return this.hostname + ":" + this.port;
+        },
+        paletteLabel: "connect"
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-connect">
+
+    <div class="form-row">
+        <label for="node-input-port"><i class="icon-tag"></i> Port #</label>
+        <input type="text" id="node-input-port">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hostname"><i class="icon-tag"></i> Server Name</label>
+        <input type="text" id="node-input-hostname">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-connect">
+    <p>Opens a connection to a Phidget Network Server, making the Phidgets connected to that server accessible to the flow.</p>
+</script>

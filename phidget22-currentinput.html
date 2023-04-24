@@ -1,0 +1,76 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-currentinput',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            channel: {value: 0 },
+            deviceSerialNumber: {value: -1},
+            hubPort: {value: 0},
+            debug: {value: false},
+            dataInterval: {required: true},
+            currentChangeTrigger:{value: 0},
+            powerSupply:{value: 1}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            return "CurrentInput(" + this.channel + ")";
+        },
+        paletteLabel: "CurrentInput",
+        oneditprepare: function() {
+            var prevtype = this.powerSupply;
+
+            $.getScript('phidget22/js/phidget22.min.js').done(function(data,textStatus,jqxhr){
+
+                for (var key in phidget22.PowerSupply) {
+                    $('#node-input-powerSupply').append(new Option(key,phidget22.PowerSupply[key]));
+                } 
+                $('#node-input-powerSupply').val(prevtype);               
+            })
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-currentinput">
+
+    <div class="form-row">
+        <label for="node-input-powerSupply"><i class="icon-tag"></i>Power Supply</label>
+        <select id="node-input-powerSupply">
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <input type="text" id="node-input-channel">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+        <input type="text" id="node-input-deviceSerialNumber">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+        <input type="text" id="node-input-hubPort">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-dataInterval"><i class="icon-tag"></i> Data Interval</label>
+        <input type="text" id="node-input-dataInterval">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-currentChangeTrigger"><i class="icon-tag"></i> Change Trigger</label>
+        <input type="text" id="node-input-currentChangeTrigger">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-currentinput">
+    <p>Opens a Phidget current input object, which will send messages when the current changes.</p>
+</script>

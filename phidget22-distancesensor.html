@@ -1,0 +1,64 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-distancesensor',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            channel: {value: 0 },
+            deviceSerialNumber: {value: -1},
+            hubPort: {value: 0},
+            debug: {value: false},
+            dataInterval: {required: true},
+            distanceChangeTrigger:{value: 0},
+            sonarQuietMode: {value: false}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            return "DistanceSensor(" + this.channel + ")";
+        },
+        paletteLabel: "DistanceSensor"
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-distancesensor">
+
+    <div class="form-row">
+        <label for="node-input-sonarQuietMode" style="width:270px"><i class="icon-tag"></i>Quiet Mode</label>
+        <input type="checkbox" style="width:auto" id="node-input-sonarQuietMode">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <input type="text" id="node-input-channel">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+        <input type="text" id="node-input-deviceSerialNumber">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+        <input type="text" id="node-input-hubPort">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-dataInterval"><i class="icon-tag"></i> Data Interval</label>
+        <input type="text" id="node-input-dataInterval">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-distanceChangeTrigger"><i class="icon-tag"></i> Change Trigger</label>
+        <input type="text" id="node-input-distanceChangeTrigger">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-distancesensor">
+    <p>Opens a Phidget distance sensor object, which will send messages when the distance changes.</p>
+</script>

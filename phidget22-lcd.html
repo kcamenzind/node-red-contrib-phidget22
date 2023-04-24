@@ -1,0 +1,63 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-lcd',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            channel: {value: 0 },
+            deviceSerialNumber: {value: -1},
+            hubPort: {value: 0},
+            debug: {value: false},
+            screenSize: {value:1}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            return "LCD(" + this.channel + ")";
+        },
+        paletteLabel: "LCD",
+        oneditprepare: function() {
+            var prevSize= this.screenSize;
+            $.getScript('phidget22/js/phidget22.min.js').done(function(data,textStatus,jqxhr){
+
+                for (var key in phidget22.LCDScreenSize) {
+                    $('#node-input-screenSize').append(new Option(key,phidget22.LCDScreenSize[key]));
+                } 
+                $('#node-input-screenSize').val(prevSize);               
+            })
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-lcd">
+
+    <div class="form-row">
+        <label for="node-input-screenSize"><i class="icon-tag"></i>Screen Size</label>
+        <select id="node-input-screenSize">
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <input type="text" id="node-input-channel">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+        <input type="text" id="node-input-deviceSerialNumber">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+        <input type="text" id="node-input-hubPort">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-lcd">
+    <p>Opens a Phidget LCD object, which will receive messages to write text or graphics on the LCD screen.</p>
+</script>

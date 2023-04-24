@@ -1,0 +1,70 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-powerguard',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            channel: {value: 0 },
+            deviceSerialNumber: {value: -1},
+            hubPort: {value: 0},
+            debug: {value: false},
+            fanMode:{value: 1},
+            overVoltage:{required: true}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            return "PowerGuard(" + this.channel + ")";
+        },
+        paletteLabel: "PowerGuard",
+        oneditprepare: function() {
+            var prevFan = this.fanMode;
+
+            $.getScript('phidget22/js/phidget22.min.js').done(function(data,textStatus,jqxhr){
+
+                for (var key in phidget22.FanMode) {
+                    $('#node-input-fanMode').append(new Option(key,phidget22.FanMode[key]));
+                } 
+                $('#node-input-fanMode').val(prevFan);      
+            })
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-powerguard">
+
+    <div class="form-row">
+        <label for="node-input-overVoltage"><i class="icon-tag"></i>Over-Voltage Trigger</label>
+        <input type="text" id="node-input-overVoltage">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-fanMode"><i class="icon-tag"></i>Fan</label>
+        <select id="node-input-fanMode">
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <input type="text" id="node-input-channel">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+        <input type="text" id="node-input-deviceSerialNumber">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hubPort"><i class="icon-tag"></i> Hub Port</label>
+        <input type="text" id="node-input-hubPort">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-powerguard">
+    <p>Opens a Phidget power guard object, which will control the output of the power supply.</p>
+</script>

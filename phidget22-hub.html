@@ -1,0 +1,35 @@
+<script type="text/javascript">
+    RED.nodes.registerType('phidget22-hub',{
+        category: 'Phidgets',
+        color: '#a6bbcf',
+        defaults: {
+            deviceSerialNumber: {value: -1},
+            debug: {value: false}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "phidgetlogo.png",
+        label: function() {
+            return "Hub(" + this.deviceSerialNumber + ")";
+        },
+        paletteLabel: "Hub",
+        
+    });
+</script>
+
+<script type="text/x-red" data-template-name="phidget22-hub">
+
+    <div class="form-row">
+        <label for="node-input-deviceSerialNumber"><i class="icon-tag"></i> Serial #</label>
+        <input type="text" id="node-input-deviceSerialNumber">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-debug" style="width:270px"><i class="icon-tag"></i>Debug messages</label>
+        <input type="checkbox" style="width:auto" id="node-input-debug">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="phidget22-hub">
+    <p>Opens a Phidget hub object, which will allow you to toggle power to individual ports on a VINT Hub.</p>
+</script>

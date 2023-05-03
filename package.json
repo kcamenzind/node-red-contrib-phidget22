@@ -17,11 +17,15 @@
     "node-red",
     "phidgets"
   ],
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
     "build": "tsc --skipLibCheck && cp ./src/*.html ./dist/ && cp -r ./static ./dist/ && cp -r ./icons ./dist/",
     "clean": "rm -rf ./dist",
     "check": "npx prettier --check ./src/*",
-    "format": "npx prettier --write ./src/*"
+    "format": "npx prettier --write ./src/*",
+    "prepublish": "npm run check && npm run build"
   },
   "author": "Michael Paradis",
   "contributors": ["Kathy Camenzind"],

@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.1
+
+* Upgraded phidget22-net from 3.14 to 3.17.
+
 ## v2.0.0
 
 * Upgraded the nodes to use `phidget22-net` v3 instead of `phidget22` v2.
